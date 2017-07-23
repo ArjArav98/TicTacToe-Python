@@ -1,0 +1,266 @@
+This program is meant to simulate a working model of Tic-Tac-Toe in Python
+Author:- Arjun Aravind
+Date Started:- 22.7.2017
+Python:- Version 3.6.1
+
+=========
+ CONTENT
+=========
+
+	1.a) HOW-TO (QUICKSTART)
+	2.a) PROGRAM WORKING
+	3.a) FUNCTION DOCUMENTATION
+	3.4) CODE DOCUMENTATION
+	4.a) PROGRAM CODE
+
+1.a) HOW-TO (QUCIKSTART)
+
+	--> Boot up the game and have a look at the rules which have been displayed. 
+	--> A prompt will be shown on the screen for the user to either start a game or exit from the program. Choose the desired option.
+	--> Players enter their desired positions when prompted on the screen.
+	--> Players will be notified when one of the participants wins.
+
+
+2.a) PROGRAM WORKING
+
+	--> The title of the game and the rules are first displayed on the console screen.
+		--> The title is displayed using a normal print() function. However, the rules need to be 'wrapped' within a 40-character limit, so they use a special function.
+	
+	--> The user is then asked whether he/she would like to start the game or exit from the program.
+		--> If the user chooses to play the game, the printVerticalSpace() function is called (this prints vertical spaces on the console screen). This block of code is in a permanent loop until the game ends. 
+		--> Here, we then print the state of the board. In the starting, the board is always empty. However, as the game progresses, the list which stores the values will get filled up and the board on the screen will get updated accordingly.
+		--> Each player is given turns and is prompted to enter their desired position on the screen.
+		--> If the position entered is valid and has not already been filled, we update the array. If not, we print an error message on the screen and the player has to play again.
+		--> We then check if the game has ended, that is, we check if one player has won the game by checking if there are any entries on the board which are in a winning situation. If yes, the game ends and we print a message. If not, the loop goes on to its next iteration.
+		
+		
+3.a) FUNCTION DOCUMENTATION
+
+	--> printVerticalSpace()
+		--> This function is used to print vertical spaces on the screen. This is done to clear any pre-existing content on the console screen which might clutter the output area.
+		--> This is achieved by calling the 'new line' character, '\n', multiple times. 
+	
+	--> printBoard()
+		--> This function is used to display the contents of the array, BOARD (This array contains information about which positions on the board are occupied by which characters. The data is stored in the form of a two-dimensional matrix.).
+		--> The working of this function is pretty straightforward. We use multiple print() statements to try and simulate a tic-tac-toe board.
+		
+	--> printRules()
+		--> This function prints the rules of the game in the opening console screen when the game is booted up.
+		--> We need a special function for a reason. The title of the game, including the design and everything, is 42 character spaces long. I wanted the rules to also not extend more than this length. However, some rules may not be less than 42 characters. In those cases, we have a need to 'wrap' these strings. So, we periodically add character by character to a string and check if the length of the string has exceeded 42 characters. If it has, we print it and and then do the same for the rest of the 'rule' string. 
+		
+	--> boardRowCheck()
+		--> This checks if the contents of the given list passed in as an argument are not blanks.
+		
+	--> gameEndCheck()
+		--> This function checks if there are any entries on the board which have created a winning situation. 
+		--> We first check to see if any of the horizontal rows have been filled by the same character. Then, we check to see if any of the vertical rows have been filled. We then check to see if both the diagonals have been filled. If any of these conditions are true, then the game stops and the appropriate message is printed.
+		
+	--> positionEmpty()
+		--> This function checks to see if the position entered by the user already has a value in its place. It takes in the position from the user (a value from 1 to 9) and converts it to a specific cell (with a row and column value) address. If that cell is already filled, then the function returns a false. Otherwise, it returns a true.
+		
+	--> positionValid()
+		--> This function checks to see if the position entered by the user is between 1 and 9 (both included).
+		
+	--> boardInput()
+		--> This function takes in the position entered by the user and inputs the player's character in the specified position.
+		--> It does this by calculating the column and row no and then placing the value in that cell in the array.
+		
+3.b) CODE DOCUMENTATION
+
+	--> CodeSegment1
+		--> We print the title of the game (with some design added to it).
+		--> We then make a list variable and add several elements to it. Each element of this list is a 'rule' for the game.
+		--> This list is then passed into the printRules() funtion and the rules are printed in a 'wrapped' format.
+		
+	--> CodeSegment2A
+		--> Here, we declare the necessary variables needed for the program. Variables declared here are the PLAYER, PLAYERSHAPE (list containing the elements; "X" and "O"), ERRORMESSAGE, BOARD (the list containing the positions of characters in the game), STARTOPTION and GAMECOUNT.
+	
+	--> CodeSegment2B
+		--> The loop starts here.
+		--> Based on what value the variable PLAYER has, the value is alternated between 0 and 1. If the value is 0, it becomes 1 and if it is 0, it becomes 1.
+		--> CodeSegment2B1
+			--> The printVerticalSpace() function is called to clear the screen. 
+			--> The printBoard() function is then called to print the current contents of the BOARD list on the screen in a manner which is viewable for the players of the game.
+			--> Certain messages are printed on the screen; such as the prompting of the player whose turn it is now to play. It also prints any error messages if the ERRORMESSAGE variable is true.
+			--> The position that the user would then like to enter is taken in from the console and stored in OPTION as a number.
+		--> CodeSegment2B2
+			--> We then check if the position entered is valid and is not already taken. If both the conditions are satisfied, then the screen is cleared and the current state of the board is printed.
+			--> We then check if the game could have ended. If yes, we assign 0 to STARTOPTION.
+			--> If not, the loop goes on.
+	--> CodeSegment3
+		--> We print the appropriate message.
+		
+		
+4.a) PROGRAM CODE
+
+=================================
+Code for this program starts here
+=================================
+
+
+"""
+This program is meant to simulate a working model of Tic-Tac-Toe in Python
+Author:- Arjun Aravind
+Date Started:- 22.7.2017
+Python:- Version 3.6.1
+Refer documentation for more details on functions and related code
+"""
+
+"""
+Function Declaration starts here
+"""
+
+def printVerticalSpace():
+    for i in range(0,10):
+        print("\n\n\n\n")
+
+def printRules(rules):
+    for i in range(0,4):
+        length=len(rules[i])
+        a=""
+        count=0
+        for j in range(0,length):
+            if ((count>=42) or (j==(length-1))):
+                print(a)
+                a="    "
+                count=4
+            a+=rules[i][j]
+            count+=1
+
+def printBoard(board):
+    print("\n")
+    for i in range(0,2):
+        print("{:^42}".format("     |     |     "))
+        print("{:^42}".format("  {b1}  |  {b2}  |  {b3}  ".format(b1=board[i][0], b2=board[i][1], b3=board[i][2])))
+        print("{:^42}".format("_____|_____|_____"))
+    print("{:^42}".format("     |     |     "))
+    print("{:^42}".format("  {b1}  |  {b2}  |  {b3}  ".format(b1=board[2][0], b2=board[2][1], b3=board[2][2])))
+    print("{:^42}".format("     |     |     "))
+    print("\n")
+
+def boardRowCheck(boardRow):
+    if boardRow[0]!=" " and boardRow[1]!=" " and boardRow[2]!=" ":
+        return 1
+    else:
+        return 0
+
+def gameEndCheck(board, playerShapes):
+    
+    for i in range(0,3):
+        if (board[i][0]==board[i][1] and board[i][1]==board[i][2] and boardRowCheck(board[i])):
+            print("Player {player} wins!\n".format(player=playerShapes.index(board[i][0])+1))
+            return 1
+    
+    for i in range(0,3):
+        if (board[0][i]==board[1][i] and board[1][i]==board[2][i] and boardRowCheck([board[0][i], board[1][i], board[2][i]])):
+            print("Player {player} wins!\n".format(player=playerShapes.index(board[0][i])+1))
+            return 1
+    
+    if  (board[0][0]==board[1][1] and board[1][1]==board[2][2] and boardRowCheck([board[0][0], board[1][1], board[2][2]])):
+            print("Player {player} wins!\n".format(player=playerShapes.index(board[1][1])+1))
+            return 1
+    
+    elif (board[2][0]==board[1][1] and board[1][1]==board[0][2] and boardRowCheck([board[2][0], board[1][1], board[0][2]])):
+            print("Player {player} wins!\n".format(player=playerShapes.index(board[1][1])+1))
+            return 1
+            
+    return 0
+
+def positionEmpty(board, row, col):
+    if board[row][col]=="X" or board[row][col]=="O":
+        return 0
+    else: 
+        return 1
+
+def positionValid(pos):
+    if pos>=1 and pos<=9:
+        return 1
+    else:
+        return 0
+
+def boardInput(pos, board, charac):
+    pos-=1
+    row=(int(pos/3))
+    col=(pos%3)
+    
+    board[row][col]=charac
+    return board
+
+"""
+Function Declaration ends here
+"""
+
+#CodeSegment1
+
+printVerticalSpace()
+
+print("==========================================")
+print("{:*^42}".format(" TIC-TAC-TOE "))
+print("==========================================")
+
+print("\n")
+
+print("{:^42}".format("============"))
+print("{:^42}".format("RULES"))
+print("{:^42}".format("============"))
+
+print("")
+
+rules=[]
+rules.append("--> The game can be played by a maximum of two players.")
+rules.append("--> The two players will have to play with either an X or an O.")
+rules.append("--> The positions in the game range from 1 to 9. ")
+rules.append("--> At every turn, the players will have to enter the position and press ENTER.")
+
+printRules(rules)
+
+#CodeSegment2A
+
+player=1
+playerShape=["X", "O"]
+errorMessage=False
+gameCount=0
+board=[[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+startOption=int(input("\n\n\nWould you like to start the game? Press any button to start and 0 to exit.\n--> "))
+
+#CodeSegment2B
+
+while startOption!=0 and gameCount<=9:
+    
+    if player==1:
+        player=0
+    elif player==0:
+        player=1
+    
+    #CodeSegment2B1
+    
+    printVerticalSpace()
+    printBoard(board)
+    
+    print("\nIt is now the turn of Player {player} ({playerShape})".format(player=player+1, playerShape=playerShape[player]))
+    if errorMessage:
+        print("Make sure you enter a valid position.")
+        print("Make sure you enter a position which is empty.")
+    
+    pos=int(input("Player {player}, enter your position (from 1 to 9) --> ".format(player=player+1)))
+    
+    #CodeSegment2B2
+    
+    if positionEmpty(board, (int((pos-1)/3)), ((pos-1)%3)) and positionValid(pos):
+        gameCount+=1
+        board=boardInput(pos, board, playerShape[player])
+        printVerticalSpace()
+        printBoard(board)
+        if gameEndCheck(board, playerShape):
+            startOption=0
+    else:
+        errorMessage=True
+        player=1-player
+
+#CodeSegment3
+
+print("Thanks for playing!\n")
+
+==========================
+Code for program ends here
+==========================
